@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
         // shoots linecast to check for ground
         isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
 
-        if (isGrounded && currentJumps > 0)
+       // if (isGrounded && currentJumps > 0)
             currentJumps = 0;
 
 

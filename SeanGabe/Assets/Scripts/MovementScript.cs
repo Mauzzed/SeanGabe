@@ -15,7 +15,7 @@ public class MovementScript : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
-        Col = GetComponent<BoxCollider2D>();
+       // Col = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame

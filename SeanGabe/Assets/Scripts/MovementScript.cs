@@ -30,7 +30,7 @@ public class MovementScript : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
-        Jump();
+       // Jump();
     }
     void MoveAction(float dir)
     {
@@ -41,13 +41,13 @@ public class MovementScript : MonoBehaviour
         MoveAction(Xdir);
     }
 
-    void Jump()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
-        {
-            rb.AddForce(transform.up * Jump_Power);
-        }
-    }
+  //  void Jump()
+  //  {
+     //   if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+       // {
+           // rb.AddForce(transform.up * Jump_Power);
+       // }
+   // }
     bool isGrounded()
     {
         float ExtraHight = 0.0f;

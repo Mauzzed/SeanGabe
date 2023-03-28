@@ -111,10 +111,17 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // shoots linecast to check for ground
+<<<<<<< Updated upstream
         isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
 
         if (isGrounded && currentJumps > 0)
             currentJumps = 0;
+=======
+      isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
+
+       if (isGrounded && currentJumps > 0)
+           currentJumps = 0;
+>>>>>>> Stashed changes
 
 
         if (jumping)

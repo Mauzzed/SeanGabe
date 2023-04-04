@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 StopAllCoroutines();
                 StartCoroutine(PerformBash());
-
+                audioSource.PlayOneShot(bashSFX);
             }
 
             yield return null;
@@ -115,13 +115,18 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
 
         if (isGrounded && currentJumps > 0)
+
+            currentJumps = 0;
+
             currentJumps = 2;
+
 
         isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
 
         if (isGrounded && currentJumps > 0)
-            currentJumps = 1;
 
+            currentJumps = 0;
+            currentJumps = 1;
 
 
         if (jumping)
@@ -171,6 +176,33 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("BashableProjectile"))
+        {
+            SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
+            rend.color = Color.red;
+            Debug.Log("Entering Trigger");
+            StartCoroutine(CheckBash());
+        }
+        else if (collision.gameObject.CompareTag("Spawnpoint"))
+        {
+
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("BashableProjectile"))
+        {
+            SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
+            rend.color = Color.white;
+            Debug.Log("Exiting trigger");
+            StopAllCoroutines();
+            // health.canTakeDamage = true;
+        }
+    }
+}
 
     //private void OnTriggerEnter2D(Collider2D collision)
     //  {

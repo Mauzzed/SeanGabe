@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip bashSFX;
     private Vector2 movementDir;
     private Rigidbody2D rb;
-    // private Health health;
+    //private Health health;
     public AudioClip jumpSFX;
 
     #region -- // Speed Fields // --
@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 StopAllCoroutines();
                 StartCoroutine(PerformBash());
-
+                audioSource.PlayOneShot(bashSFX);
             }
 
             yield return null;
@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator PerformBash()
     {
-        // health.canTakeDamage = false;
+       // health.canTakeDamage = false;
         print("Performing");
         isBashing = true;
         while (isBashing)
@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
                 isBashing = false;
                 yield return new WaitForSeconds(1f);
 
-                //health.canTakeDamage = true;
+               // health.canTakeDamage = true;
             }
 
             yield return null;
@@ -111,24 +111,17 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // shoots linecast to check for ground
-
         isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
 
         if (isGrounded && currentJumps > 0)
-            currentJumps = 2;
-
-        isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
-
-        if (isGrounded && currentJumps > 0)
-            currentJumps = 1;
-
+            currentJumps = 0;
 
 
         if (jumping)
         {
             jumping = false;
 
-            currentJumps++;
+            ++currentJumps;
             Vector2 vel = rb.velocity;
             vel.y = 0;
             rb.velocity = vel;
@@ -143,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && currentJumps < maxJumps)
         {
             jumping = true;
-            //audioSource.PlayOneShot(jumpSFX);
+            audioSource.PlayOneShot(jumpSFX);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift))
@@ -172,29 +165,29 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //  {
-    // if (collision.gameObject.CompareTag("BashableProjectile"))
-    // {
-    //  SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
-    //  rend.color = Color.red;
-    //  Debug.Log("Entering Trigger");
-    //  StartCoroutine(CheckBash());
-    // }
-    // else if (collision.gameObject.CompareTag("Spawnpoint"))
-    // {
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("BashableProjectile"))
+        {
+            SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
+            rend.color = Color.red;
+            Debug.Log("Entering Trigger");
+            StartCoroutine(CheckBash());
+        }
+        else if (collision.gameObject.CompareTag("Spawnpoint"))
+        {
 
-    // }
-    // }
-    //private void OnTriggerExit2D(Collider2D collision)
-    // {
-    //if (collision.gameObject.CompareTag("BashableProjectile"))
-    // {
-    //   SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
-    //   rend.color = Color.white;
-    // Debug.Log("Exiting trigger");
-    //  StopAllCoroutines();
-    // health.canTakeDamage = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("BashableProjectile"))
+        {
+            SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
+            rend.color = Color.white;
+            Debug.Log("Exiting trigger");
+            StopAllCoroutines();
+           // health.canTakeDamage = true;
+        }
+    }
 }
-//  }
-//}

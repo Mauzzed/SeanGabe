@@ -328,13 +328,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1490560824}
   - component: {fileID: 1490560823}
-  - component: {fileID: 1490560822}
   - component: {fileID: 1490560821}
   - component: {fileID: 1490560825}
   - component: {fileID: 1490560826}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -365,23 +364,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1490560822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490560820}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 301d1e6f5b021f04b94dc60a23a36d0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Movement_Speed: 500
-  Jump_Power: 1000
-  LayerMask:
-    serializedVersion: 2
-    m_Bits: 55
 --- !u!212 &1490560823
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -466,7 +448,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 5
-  m_Material: {fileID: 6200000, guid: 6e2dc72a62a4b49488711e4a0f6a44b0, type: 2}
+  m_Material: {fileID: 6200000, guid: b5f0cfaf964644a4fb602ded8ae11583, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -480,21 +462,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1490560820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c576e3bb76d9af546a13cb672cba1758, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e05b91695392c045ad2fb7a47f30885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
   bashSFX: {fileID: 0}
   jumpSFX: {fileID: 0}
-  speed: 7
+  speed: 10
   sprintSpeed: 10
   inAirSpeed: 1
   groundCheck: {fileID: 1618267663}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 513
-  jumpForce: 16
-  bashForce: 8
+    m_Bits: 0
+  jumpForce: 15
+  bashForce: 3
   maxJumps: 2
   isBashing: 0
   airControl: 0.1
@@ -522,7 +504,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618267662}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.259, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25899997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

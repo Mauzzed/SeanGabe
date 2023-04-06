@@ -1,60 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementScript : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    [SerializeField] private float Movement_Speed;
-    [SerializeField] private float Jump_Power;
-    float Xdir;
+    PlayerControls controls;
+    Vector2 movement;
+    Rigidbody2D rb;
 
-    [SerializeField] private LayerMask LayerMask;
-    private Collider2D Col;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        rb = this.GetComponent<Rigidbody2D>();
-        //    Col = GetComponent<BoxCollider2D>();
-    }
+        rb = GetComponent<Rigidbody2D>();
+        controls = new PlayerControls();
 
-    // Update is called once per frame
-    void Update()
-    {
-        Xdir = Input.GetAxis("Horizontal");
-        print(Xdir);
-        if (Xdir > 0)
-        {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        else if (Xdir < 0)
-        {
-            transform.eulerAngles = new Vector3(0, 180, 0);
-        }
-        Jump();
-    }
-    void MoveAction(float dir)
-    {
-        rb.velocity = Vector2.right * dir * Movement_Speed * Time.deltaTime;
+        controls.Newactionmap.Move.performed += ctx => movement = ctx.ReadValue<Vector2>(); // player movement code
+        controls.Newactionmap.Move.canceled += ctx => movement = Vector2.zero;         //vector2(0,0)
+        Debug.Log(movement);
+
+
+   
+
     }
     private void FixedUpdate()
     {
-        MoveAction(Xdir);
+        Move(movement);
     }
-
-    void Jump()
+    private void Move(Vector2 moveDir)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
-        {
-            rb.AddForce(transform.up * Jump_Power);
-        }
-    }
-    bool isGrounded()
-    {
-        float ExtraHight = 0.0f;
-        RaycastHit2D raycastHit2D = Physics2D.BoxCast(Col.bounds.center, Col.bounds.size, 0f, Vector2.down, ExtraHight, LayerMask);
-        return raycastHit2D.collider != null;
-        {
+        rb.AddForce(moveDir);
 
-        }
     }
+     
+}

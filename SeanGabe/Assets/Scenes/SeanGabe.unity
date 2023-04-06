@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 921508351}
   - component: {fileID: 921508350}
   - component: {fileID: 921508352}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: platform
   m_TagString: IsGround
   m_Icon: {fileID: 0}
@@ -328,12 +328,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1490560824}
   - component: {fileID: 1490560823}
+  - component: {fileID: 1490560826}
   - component: {fileID: 1490560821}
   - component: {fileID: 1490560825}
-  - component: {fileID: 1490560826}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
-  m_TagString: MainCamera
+  m_TagString: IsGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -462,24 +462,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1490560820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e05b91695392c045ad2fb7a47f30885, type: 3}
+  m_Script: {fileID: 11500000, guid: 301d1e6f5b021f04b94dc60a23a36d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
-  bashSFX: {fileID: 0}
-  jumpSFX: {fileID: 0}
-  speed: 10
-  sprintSpeed: 10
-  inAirSpeed: 1
-  groundCheck: {fileID: 1618267663}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 0
-  jumpForce: 15
-  bashForce: 3
-  maxJumps: 2
-  isBashing: 0
-  airControl: 0.1
 --- !u!1 &1618267662
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1618267663}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundCheck
   m_TagString: IsGround
   m_Icon: {fileID: 0}

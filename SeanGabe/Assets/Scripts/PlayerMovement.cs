@@ -37,198 +37,171 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
 
-    public void Awake()
+    public void Update()
     {
         rb = GetComponent<Rigidbody2D>();
         //health = GetComponent<Health>();
         currentSpeed = speed;
-    }
 
-    private void MoveCharacter(Vector2 dir)
-    {
-        Vector2 vel = dir * currentSpeed;
-        vel.y = rb.velocity.y;
+        [SerializeField] void MoveCharacter(Vector2 dir)
+        {
+            Vector2 vel = dir * currentSpeed;
+            vel.y = rb.velocity.y;
 
-        // If the character is grounded, apply
-        // the desired velocity.
-        if (isGrounded)
-        {
-            rb.velocity = vel;
-        }
-        else
-        {
-            // vel = the direction the player wants to move,
-            // So we Lerp between the current velocity and 
-            // the desired velocity over time.
-            if (vel != Vector2.zero)
+            // If the character is grounded, apply
+            // the desired velocity.
+            if (isGrounded)
             {
-                rb.velocity = Vector2.Lerp(rb.velocity, vel, Time.deltaTime * airControl);
+                rb.velocity = vel;
+            }
+            else
+            {
+                // vel = the direction the player wants to move,
+                // So we Lerp between the current velocity and 
+                // the desired velocity over time.
+                if (vel != Vector2.zero)
+                {
+                    rb.velocity = Vector2.Lerp(rb.velocity, vel, Time.deltaTime * airControl);
+                }
+            }
+
+        }
+        [SerializeField] IEnumerator CheckBash()
+        {
+            while (true)
+            {
+                Debug.Log("insideBash");
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(PerformBash());
+                    audioSource.PlayOneShot(bashSFX);
+                }
+
+                yield return null;
             }
         }
 
-    }
-    private IEnumerator CheckBash()
-    {
-        while (true)
+        [SerializeField] IEnumerator PerformBash()
         {
-            Debug.Log("insideBash");
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            // health.canTakeDamage = false;
+            print("Performing");
+            isBashing = true;
+            while (isBashing)
             {
-                StopAllCoroutines();
-                StartCoroutine(PerformBash());
-                audioSource.PlayOneShot(bashSFX);
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    Debug.Log("doneBashing");
+                    Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                    direction.z = 0;
+
+                    rb.velocity = Vector2.zero;
+                    rb.AddForce(direction.normalized * bashForce, ForceMode2D.Impulse);
+                    isBashing = false;
+                    yield return new WaitForSeconds(1f);
+
+                    // health.canTakeDamage = true;
+                }
+
+                yield return null;
             }
-
-            yield return null;
         }
-    }
 
-    private IEnumerator PerformBash()
-    {
-       // health.canTakeDamage = false;
-        print("Performing");
-        isBashing = true;
-        while (isBashing)
+        [SerializeField] void Awake()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Debug.Log("doneBashing");
-                Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-                direction.z = 0;
+            // shoots linecast to check for ground
+            isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
 
-                rb.velocity = Vector2.zero;
-                rb.AddForce(direction.normalized * bashForce, ForceMode2D.Impulse);
-                isBashing = false;
-                yield return new WaitForSeconds(1f);
+            if (isGrounded && currentJumps > 0)
 
-               // health.canTakeDamage = true;
-            }
-
-            yield return null;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        // shoots linecast to check for ground
-        isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
-
-        if (isGrounded && currentJumps > 0)
-
-            currentJumps = 0;
+                currentJumps = 0;
 
             currentJumps = 0;
 
             currentJumps = 2;
 
 
-        isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
+            isGrounded = Physics2D.Linecast(transform.position, groundCheck.position, whatIsGround);
 
-        if (isGrounded && currentJumps > 0)
+            if (isGrounded && currentJumps > 0)
 
-            currentJumps = 0;
+                currentJumps = 0;
             currentJumps = 1;
 
 
 
-        if (jumping)
-        {
-            jumping = false;
+            if (jumping)
+            {
+                jumping = false;
 
-            ++currentJumps;
-            Vector2 vel = rb.velocity;
-            vel.y = 0;
-            rb.velocity = vel;
+                ++currentJumps;
+                Vector2 vel = rb.velocity;
+                vel.y = 0;
+                rb.velocity = vel;
 
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
-    }
-
-    public void Update()
-    {
-        // only activates if both on the ground and button is pressed
-        if (Input.GetKeyDown(KeyCode.Space) && currentJumps < maxJumps)
-        {
-            jumping = true;
-            audioSource.PlayOneShot(jumpSFX);
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift))
+        [SerializeField] void Update()
         {
-            SetSprinting();
+            // only activates if both on the ground and button is pressed
+            if (Input.GetKeyDown(KeyCode.Space) && currentJumps < maxJumps)
+            {
+                jumping = true;
+                audioSource.PlayOneShot(jumpSFX);
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                SetSprinting();
+            }
+
+
+
+            movementDir = new Vector2(Input.GetAxisRaw("Horizontal"), rb.velocity.y);
+            MoveCharacter(movementDir);
         }
 
-
-
-        movementDir = new Vector2(Input.GetAxisRaw("Horizontal"), rb.velocity.y);
-        MoveCharacter(movementDir);
-    }
-
-    private void SetSprinting()
-    {
-        // toggles sprinting
-        isSprinting = !isSprinting;
-        if (isSprinting)
+        [SerializeField] void SetSprinting()
         {
-            currentSpeed = sprintSpeed;
-        }
-        else
-        {
-            currentSpeed = speed;
+            // toggles sprinting
+            isSprinting = !isSprinting;
+            if (isSprinting)
+            {
+                currentSpeed = sprintSpeed;
+            }
+            else
+            {
+                currentSpeed = speed;
+            }
+
         }
 
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("BashableProjectile"))
+        [SerializeField] void OnTriggerEnter2D(Collider2D collision)
         {
-            SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
-            rend.color = Color.red;
-            Debug.Log("Entering Trigger");
-            StartCoroutine(CheckBash());
-        }
-        else if (collision.gameObject.CompareTag("Spawnpoint"))
-        {
+            if (collision.gameObject.CompareTag("BashableProjectile"))
+            {
+                SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
+                rend.color = Color.red;
+                Debug.Log("Entering Trigger");
+                StartCoroutine(CheckBash());
+            }
+            else if (collision.gameObject.CompareTag("Spawnpoint"))
+            {
 
+            }
         }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("BashableProjectile"))
+        [SerializeField] void OnTriggerExit2D(Collider2D collision)
         {
-            SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
-            rend.color = Color.white;
-            Debug.Log("Exiting trigger");
-            StopAllCoroutines();
-            // health.canTakeDamage = true;
-        }
-    }
-}
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //  {
-    // if (collision.gameObject.CompareTag("BashableProjectile"))
-    // {
-    //  SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
-    //  rend.color = Color.red;
-    //  Debug.Log("Entering Trigger");
-    //  StartCoroutine(CheckBash());
-    // }
-    // else if (collision.gameObject.CompareTag("Spawnpoint"))
-    // {
-
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("BashableProjectile"))
-        {
-            SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
-            rend.color = Color.white;
-            Debug.Log("Exiting trigger");
-            StopAllCoroutines();
-           // health.canTakeDamage = true;
+            if (collision.gameObject.CompareTag("BashableProjectile"))
+            {
+                SpriteRenderer rend = collision.GetComponentInParent<SpriteRenderer>();
+                rend.color = Color.white;
+                Debug.Log("Exiting trigger");
+                StopAllCoroutines();
+                //health.canTakeDamage = true;
+            }
         }
     }
 }

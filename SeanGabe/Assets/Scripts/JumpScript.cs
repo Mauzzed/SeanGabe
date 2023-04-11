@@ -24,7 +24,7 @@ public class JumpScript : MonoBehaviour
         {
             Flip();
         }
-        else if (isFacingRight && horizontal < 0f);
+        else if (isFacingRight && horizontal < 0f)
         {
             Flip();
         }

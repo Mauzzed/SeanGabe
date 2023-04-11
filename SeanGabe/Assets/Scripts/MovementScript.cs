@@ -2,35 +2,50 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovementScript : MonoBehaviour
 {
-    PlayerControls controls;
-    Vector2 movement;
-    Rigidbody2D rb;
+    private PlayerControls input = null;
+    private Vector2 moveVector = Vector2.zero;
+    private Rigidbody2D rb = null;
+    private float moveSpeed = 10f;
 
-    // Start is called before the first frame update
     private void Awake()
     {
+        input = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
-        controls = new PlayerControls();
-
-        controls.Newactionmap.Move.performed += ctx => movement = ctx.ReadValue<Vector2>(); // player movement code
-        controls.Newactionmap.Move.canceled += ctx => movement = Vector2.zero;         //vector2(0,0)
-        Debug.Log(movement);
-
-
-   
-
+    }
+    private void OnEnable()
+    {
+        input.Enable();
+        input.Player.Movement.performed += OnMovementPerformed;
+        input.Player.Movement.canceled += OnMovementCancelled;
+    }
+    private void OnDisable()
+    {
+        input.Disable();
+        input.Player.Movement.performed -= OnMovementPerformed;
+        input.Player.Movement.canceled -= OnMovementCancelled;
     }
     private void FixedUpdate()
     {
-        Move(movement);
+        rb.velocity = moveVector * moveSpeed;
     }
-    private void Move(Vector2 moveDir)
-    {
-        rb.AddForce(moveDir);
 
+
+
+    private void OnMovementPerformed(InputAction.CallbackContext value)
+    {
+        moveVector = value.ReadValue<Vector2>(); 
     }
-     
-}
+    private void OnMovementCancelled(InputAction.CallbackContext value) 
+    {
+        moveVector = Vector2.zero;
+    }
+
+        }
+
+    
+
+ 

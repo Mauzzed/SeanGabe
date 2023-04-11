@@ -24,14 +24,14 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     ""name"": ""PlayerControls"",
     ""maps"": [
         {
-            ""name"": ""New action map"",
+            ""name"": ""Player"",
             ""id"": ""33c4db93-c0e3-4290-aaab-3c34f859b263"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""a25f87a9-b094-42c3-bf38-3d2e73b963d6"",
-                    ""expectedControlType"": ""Stick"",
+                    ""expectedControlType"": ""Analog"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -46,7 +46,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Grab"",
+                    ""name"": ""roll"",
                     ""type"": ""Button"",
                     ""id"": ""29e04095-4d0b-4ff4-8d58-87cba37a6cdf"",
                     ""expectedControlType"": ""Button"",
@@ -55,7 +55,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Slide"",
+                    ""name"": ""Bash"",
                     ""type"": ""Button"",
                     ""id"": ""eaba5c40-7374-4f73-b313-94d60313c788"",
                     ""expectedControlType"": ""Button"",
@@ -72,7 +72,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -94,7 +94,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Grab"",
+                    ""action"": ""roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -105,7 +105,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Slide"",
+                    ""action"": ""Bash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -114,12 +114,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // New action map
-        m_Newactionmap = asset.FindActionMap("New action map", throwIfNotFound: true);
-        m_Newactionmap_Move = m_Newactionmap.FindAction("Move", throwIfNotFound: true);
-        m_Newactionmap_Jump = m_Newactionmap.FindAction("Jump", throwIfNotFound: true);
-        m_Newactionmap_Grab = m_Newactionmap.FindAction("Grab", throwIfNotFound: true);
-        m_Newactionmap_Slide = m_Newactionmap.FindAction("Slide", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_roll = m_Player.FindAction("roll", throwIfNotFound: true);
+        m_Player_Bash = m_Player.FindAction("Bash", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -176,67 +176,67 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // New action map
-    private readonly InputActionMap m_Newactionmap;
-    private INewactionmapActions m_NewactionmapActionsCallbackInterface;
-    private readonly InputAction m_Newactionmap_Move;
-    private readonly InputAction m_Newactionmap_Jump;
-    private readonly InputAction m_Newactionmap_Grab;
-    private readonly InputAction m_Newactionmap_Slide;
-    public struct NewactionmapActions
+    // Player
+    private readonly InputActionMap m_Player;
+    private IPlayerActions m_PlayerActionsCallbackInterface;
+    private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_roll;
+    private readonly InputAction m_Player_Bash;
+    public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
-        public NewactionmapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Newactionmap_Move;
-        public InputAction @Jump => m_Wrapper.m_Newactionmap_Jump;
-        public InputAction @Grab => m_Wrapper.m_Newactionmap_Grab;
-        public InputAction @Slide => m_Wrapper.m_Newactionmap_Slide;
-        public InputActionMap Get() { return m_Wrapper.m_Newactionmap; }
+        public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @roll => m_Wrapper.m_Player_roll;
+        public InputAction @Bash => m_Wrapper.m_Player_Bash;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(NewactionmapActions set) { return set.Get(); }
-        public void SetCallbacks(INewactionmapActions instance)
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerActions instance)
         {
-            if (m_Wrapper.m_NewactionmapActionsCallbackInterface != null)
+            if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnMove;
-                @Jump.started -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnJump;
-                @Grab.started -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnGrab;
-                @Grab.performed -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnGrab;
-                @Grab.canceled -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnGrab;
-                @Slide.started -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnSlide;
-                @Slide.performed -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnSlide;
-                @Slide.canceled -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnSlide;
+                @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @roll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRoll;
+                @roll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRoll;
+                @roll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRoll;
+                @Bash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBash;
+                @Bash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBash;
+                @Bash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBash;
             }
-            m_Wrapper.m_NewactionmapActionsCallbackInterface = instance;
+            m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @Grab.started += instance.OnGrab;
-                @Grab.performed += instance.OnGrab;
-                @Grab.canceled += instance.OnGrab;
-                @Slide.started += instance.OnSlide;
-                @Slide.performed += instance.OnSlide;
-                @Slide.canceled += instance.OnSlide;
+                @roll.started += instance.OnRoll;
+                @roll.performed += instance.OnRoll;
+                @roll.canceled += instance.OnRoll;
+                @Bash.started += instance.OnBash;
+                @Bash.performed += instance.OnBash;
+                @Bash.canceled += instance.OnBash;
             }
         }
     }
-    public NewactionmapActions @Newactionmap => new NewactionmapActions(this);
-    public interface INewactionmapActions
+    public PlayerActions @Player => new PlayerActions(this);
+    public interface IPlayerActions
     {
-        void OnMove(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnGrab(InputAction.CallbackContext context);
-        void OnSlide(InputAction.CallbackContext context);
+        void OnRoll(InputAction.CallbackContext context);
+        void OnBash(InputAction.CallbackContext context);
     }
 }

@@ -8,6 +8,7 @@ public class JumpScript : MonoBehaviour
     public Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask grounfLayer;
+    public LayerMask pntObjectLayer;
 
     private float horizontal;
     private float speed = 8f;
@@ -40,11 +41,26 @@ public class JumpScript : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
+        if (context.performed && IsBox())
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+        }
+        if (context.canceled && rb.velocity.y > 0f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        }
     }
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, grounfLayer);
+            return Physics2D.OverlapCircle(groundCheck.position, 0.2f, grounfLayer);
     }
+
+    private bool IsBox()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, pntObjectLayer);
+    }
+
+   
     private void Flip()
     {
         isFacingRight = !isFacingRight;

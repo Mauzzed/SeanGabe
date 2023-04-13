@@ -1,15 +1,24 @@
+//using Sean;
 //using System;
 //using System.Collections;
 //using System.Collections.Generic;
 //using UnityEngine;
 //using UnityEngine.InputSystem;
+//namespace Sean 
+//{ 
+
+//}
+
+
 
 //public class MovementScript : MonoBehaviour
 //{
 //    private PlayerControls input = null;
 //    private Vector2 moveVector = Vector2.zero;
 //    private Rigidbody2D rb = null;
-//    private float moveSpeed = 10f;
+//    private Vector2 moveSpeed;
+
+//    //private float moveSpeed = 10f;
 
 //    private void Awake()
 //    {
@@ -37,15 +46,14 @@
 
 //    private void OnMovementPerformed(InputAction.CallbackContext value)
 //    {
-//        moveVector = value.ReadValue<Vector2>(); 
+//        moveVector = value.ReadValue<Vector2>();
 //    }
-//    private void OnMovementCancelled(InputAction.CallbackContext value) 
+//    private void OnMovementCancelled(InputAction.CallbackContext value)
 //    {
 //        moveVector = Vector2.zero;
 //    }
 
-//        }
+//}
 
-    
 
- 
+

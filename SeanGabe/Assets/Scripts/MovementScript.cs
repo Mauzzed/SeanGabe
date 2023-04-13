@@ -25,17 +25,21 @@
 //        input = new PlayerControls();
 //        rb = GetComponent<Rigidbody2D>();
 //    }
+//     public void Move(InputAction.CallbackContext context)
+//    {
+//        horizontal = context.ReadValue<Vector2>().x;
+//    }
 //    private void OnEnable()
 //    {
-//        input.Enable();
-//        input.Player.Movement.performed += OnMovementPerformed;
-//        input.Player.Movement.canceled += OnMovementCancelled;
+//        input.OnEnable();
+//        input.PlayerControl.Movement.performed += OnMovementPerformed;
+//        input.PlayerControl.Movement.canceled += OnMovementCancelled;
 //    }
 //    private void OnDisable()
 //    {
-//        input.Disable();
-//        input.Player.Movement.performed -= OnMovementPerformed;
-//        input.Player.Movement.canceled -= OnMovementCancelled;
+//        input.OnDisable();
+//        input.PlayerControl.Movement.performed -= OnMovementPerformed;
+//        input.PlayerControl.Movement.canceled -= OnMovementCancelled;
 //    }
 //    private void FixedUpdate()
 //    {

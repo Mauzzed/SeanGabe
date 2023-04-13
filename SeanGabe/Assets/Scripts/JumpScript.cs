@@ -10,9 +10,11 @@ public class JumpScript : MonoBehaviour
     public LayerMask grounfLayer;
 
     private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 16f;
+    private readonly float speed = 8f;
+    private readonly float jumpingPower = 16f;
     private bool isFacingRight = true;
+
+    public Vector3 Vector2 { get; private set; }
 
 
     // Update is called once per frame
@@ -48,7 +50,7 @@ public class JumpScript : MonoBehaviour
     private void Flip()
     {
         isFacingRight = !isFacingRight;
-        Vector3 localScale = transform.localScale;
+        Vector2  = transform.localScale;
     }
     public void Move(InputAction.CallbackContext context)
     {

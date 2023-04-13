@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Sean
 {
-    public abstract class InputController : ScriptableObject
+    public abstract class InputController : MonoBehaviour
     {
         public abstract float RetrieveMoveInput();
         public abstract bool RetrieveJumpInput();

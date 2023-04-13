@@ -4,18 +4,33 @@ using UnityEngine.InputSystem;
 
 namespace Sean
 {
-    public class PlayerControls : ScriptableObject
+    public class PlayerControls : MonoBehaviour
     {
         public PlayerControls input = null;
 
-        internal float RetrieveMoveInput()
+        internal float RetrieveMoveInput
         {
-            throw new NotImplementedException();
+            get; private set;
         }
 
-        internal bool RetrieveJumpInput()
+        private bool retrieveJumpInput;
+
+        internal bool GetRetrieveJumpInput()
         {
-            throw new NotImplementedException();
+            return retrieveJumpInput;
         }
+
+        private void SetRetrieveJumpInput(bool value)
+        {
+            retrieveJumpInput = value;
+        }
+
+        internal bool RetrieveJumpInput => throw new NotImplementedException();
     }
+
 }
+
+       
+             
+    
+

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GrabScript : MonoBehaviour
 {
-    
-    [SerializeField] 
+
+    [SerializeField]
     private Transform grabPoint;
 
     [SerializeField]
@@ -22,14 +24,15 @@ public class GrabScript : MonoBehaviour
         layerIndex = LayerMask.NameToLayer("pntObject");
     }
 
-    private void Update()
+    public void Grab(InputAction.CallbackContext context)
     {
         RaycastHit2D hitInfo = Physics2D.Raycast(rayPoint.position, transform.right, rayDistance);
 
         if (hitInfo.collider != null && hitInfo.collider.gameObject.layer == layerIndex)
         {
+
             //grab object
-            if (Keyboard.current.tabKey.wasPressedThisFrame && grabbedObject == null)
+            if (context.performed && grabbedObject == null)
             {
                 grabbedObject = hitInfo.collider.gameObject;
                 grabbedObject.GetComponent<Rigidbody2D>().isKinematic = true;
@@ -37,14 +40,14 @@ public class GrabScript : MonoBehaviour
                 grabbedObject.transform.SetParent(transform);
             }
             //release object
-            else if(Keyboard.current.tabKey.wasPressedThisFrame)
+            else if (context.canceled)
             {
                 grabbedObject.GetComponent<Rigidbody2D>().isKinematic = false;
                 grabbedObject.transform.SetParent(null);
                 grabbedObject = null;
             }
         }
-
         Debug.DrawRay(rayPoint.position, transform.right * rayDistance);
     }
 }
+

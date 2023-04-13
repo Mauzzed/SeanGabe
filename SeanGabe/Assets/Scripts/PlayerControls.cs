@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace Sean
 {
-    public class PlayerControls : ScriptableObject
+    public class PlayerControls : MonoBehaviour
     {
         public PlayerControls input = null;
 

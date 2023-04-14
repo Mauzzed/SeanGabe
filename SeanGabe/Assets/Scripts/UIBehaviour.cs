@@ -32,4 +32,4 @@ public class UIBehaviour : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
-}
+}  

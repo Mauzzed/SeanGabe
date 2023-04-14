@@ -31,7 +31,7 @@ public class JumpScript : MonoBehaviour
             transform.localRotation = new Quaternion(0, 0, 0, 0);
         }
 
-    
+    }
 
     public void Jump(InputAction.CallbackContext context)
     {

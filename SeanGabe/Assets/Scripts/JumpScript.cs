@@ -40,14 +40,12 @@ public class JumpScript : MonoBehaviour
         }
 
     }
-<<<<<<< Updated upstream
-=======
     /// <summary>
     /// This code controls the input system jump functionality as well as functioning
     /// as a groundcheck
     /// </summary>
     /// <param name="context"></param>
->>>>>>> Stashed changes
+
     public void Jump(InputAction.CallbackContext context)
     {
         if ( context.performed && IsGrounded())
@@ -76,7 +74,7 @@ public class JumpScript : MonoBehaviour
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, pntObjectLayer);
     }
-<<<<<<< Updated upstream
+
 
    
     private void Flip()
@@ -84,9 +82,9 @@ public class JumpScript : MonoBehaviour
         isFacingRight = !isFacingRight;
         Vector2  = transform.localScale;
     }
-=======
+
     //this code reads the controller inputs for movement
->>>>>>> Stashed changes
+
     public void Move(InputAction.CallbackContext context)
     {
         horizontal = context.ReadValue<Vector2>().x;

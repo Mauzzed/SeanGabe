@@ -1,3 +1,8 @@
+/*****************************************************************************
+// File Name :         DashScript.cs
+// Author :            Gabriel Holmes
+// Creation Date :     April 13, 2023
+*****************************************************************************/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +19,10 @@ public class DashScript : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private TrailRenderer tr;
 
+
+    /// <summary>
+    /// This function returns "is dashing" when the couritine finishes
+    /// </summary>
     private void Update()
     {
         if (isDashing)
@@ -21,20 +30,18 @@ public class DashScript : MonoBehaviour
             return;
         }
     }
-
-    private void FixedUpdate()
-    {
-        if (isDashing)
-        {
-            return;
-        }
-
-    }
-
+    /// <summary>
+    /// Only Here to call Couroutine
+    /// </summary>
     public void Dash(InputAction.CallbackContext context)
     {
         StartCoroutine(Dash());
     }
+
+    /// <summary>
+    /// sets can dash to falsh, is dashing is true. Turns gravity to 0. Then sets 
+    /// the speed for the roll and the trail. THe dash then goes on cooldown.
+    /// </summary>
     private IEnumerator Dash()
     {
         canDash = false;

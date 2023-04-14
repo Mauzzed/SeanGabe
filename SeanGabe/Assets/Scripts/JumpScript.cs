@@ -13,7 +13,6 @@ public class JumpScript : MonoBehaviour
     private float horizontal;
     private readonly float speed = 8f;
     private readonly float jumpingPower = 16f;
-    private bool isFacingRight = true;
 
     public Vector3 Vector2 { get; private set; }
 
@@ -23,16 +22,17 @@ public class JumpScript : MonoBehaviour
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
 
-        if (!isFacingRight && horizontal > 0f)
+        if (horizontal < 0)
         {
-            Flip();
+            transform.localRotation = new Quaternion(0, -180, 0, 0);
         }
-        else if (isFacingRight && horizontal < 0f)
+        else if (horizontal > 0f)
         {
-            Flip();
+            transform.localRotation = new Quaternion(0, 0, 0, 0);
         }
 
     }
+
     public void Jump(InputAction.CallbackContext context)
     {
         if ( context.performed && IsGrounded())
@@ -60,13 +60,6 @@ public class JumpScript : MonoBehaviour
     private bool IsBox()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, pntObjectLayer);
-    }
-
-   
-    private void Flip()
-    {
-        isFacingRight = !isFacingRight;
-        Vector2  = transform.localScale;
     }
     public void Move(InputAction.CallbackContext context)
     {

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 250900927}
   - component: {fileID: 250900926}
   m_Layer: 0
-  m_Name: 09388f255022b270577f886eb4a72a20
+  m_Name: GremlinBrosLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -693,8 +693,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7633ed1d8bd789a45b7a01ef9d5b6e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controls: {fileID: 0}
-  PauseMenu: {fileID: 0}
 --- !u!114 &1735229992
 MonoBehaviour:
   m_ObjectHideFlags: 0

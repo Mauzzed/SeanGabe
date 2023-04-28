@@ -18,14 +18,9 @@ public class JumpScript : MonoBehaviour
     public LayerMask pntObjectLayer;
 
     private float horizontal;
-<<<<<<< Updated upstream
     private readonly float speed = 8f;
     private readonly float jumpingPower = 16f;
     private bool isFacingRight = true;
-=======
-    public float speed = 8f;
-    public float jumpingPower = 16f;
->>>>>>> Stashed changes
 
     public Vector3 Vector2 { get; private set; }
 
@@ -53,7 +48,7 @@ public class JumpScript : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if ( context.performed && IsGrounded())
+        if (context.performed && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
@@ -72,7 +67,7 @@ public class JumpScript : MonoBehaviour
     }
     private bool IsGrounded()
     {
-            return Physics2D.OverlapCircle(groundCheck.position, 0.2f, grounfLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, grounfLayer);
     }
 
     private bool IsBox()
@@ -81,11 +76,11 @@ public class JumpScript : MonoBehaviour
     }
 
 
-   
+
     private void Flip()
     {
         isFacingRight = !isFacingRight;
-        Vector2  = transform.localScale;
+        Vector2 = transform.localScale;
     }
 
     //this code reads the controller inputs for movement

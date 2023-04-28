@@ -18,9 +18,14 @@ public class JumpScript : MonoBehaviour
     public LayerMask pntObjectLayer;
 
     private float horizontal;
+<<<<<<< Updated upstream
     private readonly float speed = 8f;
     private readonly float jumpingPower = 16f;
     private bool isFacingRight = true;
+=======
+    public float speed = 8f;
+    public float jumpingPower = 16f;
+>>>>>>> Stashed changes
 
     public Vector3 Vector2 { get; private set; }
 

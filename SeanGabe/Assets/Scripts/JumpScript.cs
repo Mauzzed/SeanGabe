@@ -10,6 +10,8 @@ public class JumpScript : MonoBehaviour
     public LayerMask grounfLayer;
     public LayerMask pntObjectLayer;
 
+    public GameObject PauseMenu;
+
     private float horizontal;
     private readonly float speed = 8f;
     private readonly float jumpingPower = 16f;
@@ -65,4 +67,14 @@ public class JumpScript : MonoBehaviour
     {
         horizontal = context.ReadValue<Vector2>().x;
     }
+
+    public void Pause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            PauseMenu.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
+    
 }

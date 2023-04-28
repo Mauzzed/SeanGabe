@@ -9,11 +9,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
 public class UIBehaviour : MonoBehaviour
 {
-/// <summary>
-/// These three function send the buttons on the UI to their indivual screens
-/// </summary>
+    public GameObject controls;
+    public GameObject PauseMenu;
+    /// <summary>
+    /// These three function send the buttons on the UI to their indivual screens
+    /// </summary>
     public void StartGame()
     {
         SceneManager.LoadScene("SeanGabe");
@@ -27,5 +30,23 @@ public class UIBehaviour : MonoBehaviour
     public void BacktoMain()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void inGameControls()
+    {
+        controls.SetActive(true);
+        PauseMenu.SetActive(false);
+    }
+
+    public void backToGame()
+    {
+        PauseMenu.SetActive(false);
+        Time.timeScale = 0;
+    }
+
+    public void backToPause()
+    {
+        controls.SetActive(false);
+        PauseMenu.SetActive(true);
     }
 }  

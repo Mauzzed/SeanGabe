@@ -80,6 +80,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Climb"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb57e697-0022-4c59-acad-fa040486b46a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Puase"",
+                    ""type"": ""Button"",
+                    ""id"": ""be5375a0-467c-47f2-accb-f90b6b84bb5f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -366,6 +384,61 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6c94f8a-812d-40a0-8917-e3e620bab6b1"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74a11e10-af96-481d-8f70-b816645896ce"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2342d11-5f69-4d0e-a7ba-a4e3b437757c"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8f30f06-bc66-4848-ae69-295ed87c3e11"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Puase"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42100828-bf84-48df-a798-e0167c077051"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Puase"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -959,6 +1032,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Climb = m_Player.FindAction("Climb", throwIfNotFound: true);
+        m_Player_Puase = m_Player.FindAction("Puase", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1036,6 +1111,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Grab;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_Climb;
+    private readonly InputAction m_Player_Puase;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1046,6 +1123,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Grab => m_Wrapper.m_Player_Grab;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @Climb => m_Wrapper.m_Player_Climb;
+        public InputAction @Puase => m_Wrapper.m_Player_Puase;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1073,6 +1152,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Climb.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimb;
+                @Climb.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimb;
+                @Climb.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimb;
+                @Puase.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPuase;
+                @Puase.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPuase;
+                @Puase.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPuase;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1095,6 +1180,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @Climb.started += instance.OnClimb;
+                @Climb.performed += instance.OnClimb;
+                @Climb.canceled += instance.OnClimb;
+                @Puase.started += instance.OnPuase;
+                @Puase.performed += instance.OnPuase;
+                @Puase.canceled += instance.OnPuase;
             }
         }
     }
@@ -1257,6 +1348,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnClimb(InputAction.CallbackContext context);
+        void OnPuase(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

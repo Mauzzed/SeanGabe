@@ -1,7 +1,7 @@
 /*****************************************************************************
-// File Name :         DashScript.cs
+// File Name :         UIBehavior.cs
 // Author :            Gabriel Holmes
-// Creation Date :     April 13, 2023
+// Creation Date :     April 27, 2023
 *****************************************************************************/
 using System.Collections;
 using System.Collections.Generic;
@@ -12,11 +12,9 @@ using UnityEngine.SceneManagement;
 
 public class UIBehaviour : MonoBehaviour
 {
-    public GameObject controls;
-    public GameObject PauseMenu;
-    /// <summary>
-    /// These three function send the buttons on the UI to their indivual screens
-    /// </summary>
+/// <summary>
+/// These three function send the buttons on the UI to their indivual screens
+/// </summary>
     public void StartGame()
     {
         SceneManager.LoadScene("SeanGabe");

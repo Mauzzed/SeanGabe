@@ -15,6 +15,6 @@ public class Win : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene("WinScreen");
+        SceneManager.LoadScene("LevelSelect");
     }
 }

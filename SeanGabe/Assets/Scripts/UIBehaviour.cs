@@ -20,30 +20,43 @@ public class UIBehaviour : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("LevelSelect");
+        
+        Time.timeScale = 1;
     }
 
     public void loadControls()
     {
         SceneManager.LoadScene("Controls");
+        Time.timeScale = 1;
     }
     
     public void BacktoMain()
     {
         SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
     }
 <<<<<<< Updated upstream
 =======
     public void Start1()
     {
         SceneManager.LoadScene("Lvl1");
+        Time.timeScale = 1;
     }
     public void Start2()
     {
         SceneManager.LoadScene("Lvl2");
+        Time.timeScale = 1;
     }
     public void StartTutorial()
     {
         SceneManager.LoadScene("SeanGabe");
+        Time.timeScale = 1;
+    }
+    public void ResetTheGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        print("The Button is working");
+        Time.timeScale = 1;
     }
 
     public void inGameControls()

@@ -11,12 +11,15 @@ using UnityEngine.SceneManagement;
 
 public class UIBehaviour : MonoBehaviour
 {
+
+    public GameObject controls;
+    public GameObject PauseMenu;
 /// <summary>
 /// These functions send the buttons on the UI to their indivual screens
 /// </summary>
     public void StartGame()
     {
-        SceneManager.LoadScene("SeanGabe");
+        SceneManager.LoadScene("LevelSelect");
     }
 
     public void loadControls()
@@ -28,4 +31,37 @@ public class UIBehaviour : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+<<<<<<< Updated upstream
+=======
+    public void Start1()
+    {
+        SceneManager.LoadScene("Lvl1");
+    }
+    public void Start2()
+    {
+        SceneManager.LoadScene("Lvl2");
+    }
+    public void StartTutorial()
+    {
+        SceneManager.LoadScene("SeanGabe");
+    }
+
+    public void inGameControls()
+    {
+        controls.SetActive(true);
+        PauseMenu.SetActive(false);
+    }
+    
+    public void backToGame()
+    {
+        PauseMenu.SetActive(false);
+        Time.timeScale = 0;
+    }
+
+    public void backToPause()
+    {
+        controls.SetActive(false);
+        PauseMenu.SetActive(true);
+    }
+>>>>>>> Stashed changes
 }  
